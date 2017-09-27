@@ -8,7 +8,7 @@ function Tower(range, targets)
 
 Tower.prototype.selectTarget = function(targets)
 {
-    console.log('this tower range: '+this.range);
+    console.log('st this tower range: '+this.range);
     var theChosenOne = targets[0];
     var tower = this;
     targets.forEach(function(enemy) {
@@ -40,13 +40,13 @@ Tower.prototype.selectTarget = function(targets)
     }
 }
 
-function killTarget(target)
+Tower.prototype.killTarget = function(target)
 {
     console.log('the chosen one: '+target.name+target.alive);
     var parent = this;
     console.log('this tower range: '+this.range);
     console.log('this target count: '+this.targetCnt);
-    target.die(parent);
+    target.die(this);
 }
 
 function noTargetsAvailable()
@@ -57,8 +57,8 @@ function noTargetsAvailable()
 
 Tower.prototype.attackEnemy = function(targets)
 {
-    console.log('this tower range: '+this.range);
-    this.selectTarget(targets).then(killTarget, noTargetsAvailable);
+    console.log('ae this tower range: '+this.range);
+    this.selectTarget(targets).then(this.killTarget, noTargetsAvailable);
     return Promise.resolve(targets);
 }
 

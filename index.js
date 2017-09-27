@@ -52,8 +52,8 @@ function gameLoop(turn, game)
 var badies = [];
 //badies.push( new Enemy('dead', 5, 10) );
 badies.push( new Enemy('bill', 100, 10) );
-badies.push( new Enemy('mike', 30, 20)   );
-badies.push( new Enemy('bob', 50, 20)   );
+badies.push( new Enemy('mike', 30, 5)   );
+badies.push( new Enemy('bob', 50, 5)   );
 var tower = new Tower(50, badies);
 var game = new TowerDefence(tower, badies);
 console.log('tower: '+tower.targetCnt);
