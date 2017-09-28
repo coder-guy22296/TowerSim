@@ -1,20 +1,21 @@
 function Enemy(name, pos, speed)
 {
+    console.log('enemy constructor start');
     this.name = name;
     this.pos = pos;
     this.speed = speed;
     this.turnsTillWin = Math.ceil(pos / speed);
-    console.log(name + ' will win in ' + this.turnsTillWin +' moves');
+    //console.log(name + ' will win in ' + this.turnsTillWin +' moves');
     this.alive = 1;
 }
 
 Enemy.prototype.move = function()
 {
-    console.log('move enemy attempt');
+    console.log('enemy move start');
     if (this.alive)
     {
         this.pos -= this.speed;
-        console.log(this.name+' has moved');
+        //console.log(this.name+' has moved');
     }
 };
 
@@ -25,15 +26,15 @@ Enemy.prototype.announce = function()
 
 Enemy.prototype.die = function(attacker)
 {
-    console.log('die');
+    console.log('enemy die start');
     this.announce();
     console.log('attacker range: '+attacker.range);
     if (this.alive && this.pos <= attacker.range)
     {   
         this.alive = 0;
         console.log('Kill ' + this.name
-                    + ' at ' + this.pos
-                    + 'm');
+                   + ' at ' + this.pos
+                   + 'm');
         attacker.targetCnt -= 1;
     }
     else

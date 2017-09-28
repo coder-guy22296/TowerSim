@@ -4,46 +4,48 @@ var TowerDefence = require('./TowerDefence.js')
 
 function targetBadie(game)
 {
-    console.log('tb this tower range: '+game.tower.range);
-    console.log('badies: '+game.badies);
+    console.log('target badie start');
+    //console.log('tb this tower range: '+game.tower.range);
+    //console.log('badies: '+game.badies);
     tower.attackEnemy(game.badies);
-    console.log('badies: '+game.badies);
+    //console.log('badies: '+game.badies);
     return Promise.resolve(game);
 }
 
 function moveBadies(game)
 {
-    console.log('mb this tower range: '+game.tower.range);
-    console.log('badies.lenght'+game.badies);
+    //console.log('mb this tower range: '+game.tower.range);
+    //console.log('badies.lenght'+game.badies);
     for (var i = 0; i < game.badies.length; i++)
     {
         var enemy = game.badies[i];
         enemy.move();
-        enemy.announce();
+        //enemy.announce();
         if (enemy.pos <= 0)
         {
-            console.log(enemy.name+' killed tower at '+enemy.pos);
+            //console.log(enemy.name+' killed tower at '+enemy.pos);
             tower.alive = 0;
             console.log('tower dead');
             break;
         }
     }
-    console.log('move badies done');
+    //console.log('move badies done');
     return Promise.resolve(game);
 }
 
 function gameLoop(turn, game)
 {
     console.log('turn '+turn);
-    console.log('this tower range: '+game.tower.range);
-    console.log('this target count: '+game.tower.targetCnt);
+    //console.log('this tower range: '+game.tower.range);
+    //console.log('this target count: '+game.tower.targetCnt);
     turn += 1;
     targetBadie(game)
     .then(moveBadies)
     .then(function(game) {
-        console.log('tower range: '+game.tower.range);
-        console.log('tower targets: '+game.tower.targetCnt);
-        console.log('tower alive: '+game.tower.alive);
+        console.log('end turn');
+        //console.log('tower range: '+game.tower.range);
+        //console.log('tower targets: '+game.tower.targetCnt);
+        //console.log('tower alive: '+game.tower.alive);
         if (game.tower.alive && game.tower.targetCnt > 0)
             gameLoop(turn, game);
     });
