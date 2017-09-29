@@ -1,9 +1,10 @@
 function Tower(range, targets)
 {
     this.range = range;
-    this.alive = 1;
+    this.alive = true;
     this.targetCnt = targets.length;
     this.game = undefined;
+    this.pos = 0;
 }
 
 Tower.prototype.selectTarget = function(targets)
@@ -15,7 +16,9 @@ Tower.prototype.selectTarget = function(targets)
         if (enemy.alive && enemy.pos <= tower.range)
         {
             //compare to the current target if the current target is alive
-            if (enemy.turnsTillWin < theChosenOne.turnsTillWin || theChosenOne.alive === 0)
+            if (enemy.turnsTillWin < theChosenOne.turnsTillWin
+                || enemy.pos - enemy.speed < theChosenOne.pos - theChosenOne.speed
+                || theChosenOne.alive === 0)
             {
                 theChosenOne = enemy;
             }
@@ -35,8 +38,9 @@ Tower.prototype.killTarget = function(target)
 {
     var currentTurn = this.game.turn;
     target.die(this)
-    .then(function() {
-        console.log('turn '+currentTurn+': killed '+target.name+' at '+target.pos+'m');
+    .then(function(game) {
+        if (game.overtime === false)
+            console.log('turn '+currentTurn+': killed '+target.name+' at '+target.pos+'m');
     }, function() {
 
     });

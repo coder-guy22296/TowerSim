@@ -4,7 +4,21 @@ function Enemy(name, pos, speed)
     this.pos = pos;
     this.speed = speed;
     this.turnsTillWin = Math.ceil(pos / speed);
-    this.alive = 1;
+    this.turnsTillRange = -42;
+    this.turnsInRange = -42;
+    this.alive = true;
+    //this.announce();
+}
+
+Enemy.prototype.calcTurnsTillRange = function(range)
+{
+    this.turnsTillRange = Math.ceil((this.pos - range) / this.speed);
+    console.log('rng:'+range+
+                ' speed: '+this.speed);
+    if (this.pos < range)
+        this.turnsInRange = this.turnsTillWin;
+    else
+        this.turnsInRange = Math.floor(range / this.speed);
 }
 
 Enemy.prototype.move = function()
@@ -18,7 +32,7 @@ Enemy.prototype.move = function()
 
 Enemy.prototype.announce = function()
 {
-    console.log('['+this.name+']im at pos: '+this.pos+' alive: '+this.alive);
+    console.log(this);
 };
 
 Enemy.prototype.die = function(attacker)
@@ -27,7 +41,7 @@ Enemy.prototype.die = function(attacker)
     {   
         this.alive = 0;
         attacker.targetCnt -= 1;
-        return Promise.resolve();
+        return Promise.resolve(attacker.game);
     }
     else
         return Promise.reject();
