@@ -6,6 +6,7 @@ function TowerDefence(tower, badies)
     this.turn = 1;
     this.extraDistance = 0;
     this.overtime = false;
+    this.won = undefined;
 }
 
 module.exports = TowerDefence;
