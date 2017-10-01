@@ -7,14 +7,11 @@ function Enemy(name, pos, speed)
     this.turnsTillRange = -42;
     this.turnsInRange = -42;
     this.alive = true;
-    //this.announce();
 }
 
 Enemy.prototype.calcTurnsTillRange = function(range)
 {
     this.turnsTillRange = Math.ceil((this.pos - range) / this.speed);
-    //console.log('rng:'+range+
-    //            ' speed: '+this.speed);
     if (this.pos < range)
         this.turnsInRange = this.turnsTillWin;
     else
@@ -37,7 +34,6 @@ Enemy.prototype.announce = function()
 
 Enemy.prototype.die = function(attacker)
 {
-    //console.log('die');
     if (this.alive && this.pos <= attacker.range)
     {   
         this.alive = false;

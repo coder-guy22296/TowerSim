@@ -9,12 +9,10 @@ function Tower(range, targets)
 
 Tower.prototype.selectTarget = function(targets)
 {
-    //console.log('st')
     var theChosenOne = targets[0];
     var tower = this;
     targets.forEach(function(enemy) {
         // if the enemy is a viable target
-        //console.log('eval');
         if (enemy.alive && enemy.pos <= tower.range)
         {
             //compare to the current target if the current target is alive
@@ -23,30 +21,19 @@ Tower.prototype.selectTarget = function(targets)
                 || theChosenOne.alive === false)
             {
                 theChosenOne = enemy;
-                //console.log('selected');
-                //console.log(enemy);
             }
         }
     });
     if (theChosenOne.alive === false || theChosenOne.pos > tower.range)
-    {
         return Promise.reject();
-    }
     else
-    {
-        //console.log('selection complete');
         return Promise.resolve(theChosenOne);
-    }
 }
 
 Tower.prototype.killTarget = function(target)
 {
-    //console.log(this);
-    //console.log(target);
-    //console.log('kt');
     target.die(this)
     .then(function(game) {
-        //console.log('wtf');
         if (game.silent === false)
             console.log('turn '+game.turn+': killed '+target.name+' at '+target.pos+'m');
     }, function() {
