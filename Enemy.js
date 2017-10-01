@@ -4,18 +4,7 @@ function Enemy(name, pos, speed)
     this.pos = pos;
     this.speed = speed;
     this.turnsTillWin = Math.ceil(pos / speed);
-    this.turnsTillRange = -42;
-    this.turnsInRange = -42;
     this.alive = true;
-}
-
-Enemy.prototype.calcTurnsTillRange = function(range)
-{
-    this.turnsTillRange = Math.ceil((this.pos - range) / this.speed);
-    if (this.pos < range)
-        this.turnsInRange = this.turnsTillWin;
-    else
-        this.turnsInRange = Math.floor(range / this.speed);
 }
 
 Enemy.prototype.move = function()
@@ -27,11 +16,6 @@ Enemy.prototype.move = function()
     }
 };
 
-Enemy.prototype.announce = function()
-{
-    console.log(this);
-};
-
 Enemy.prototype.die = function(attacker)
 {
     if (this.alive && this.pos <= attacker.range)
@@ -41,7 +25,7 @@ Enemy.prototype.die = function(attacker)
         return Promise.resolve(attacker.game);
     }
     else
-        return Promise.reject();
+        console.error('tried to kill a target that was out of range or dead!');
 };
 
 module.exports = Enemy;

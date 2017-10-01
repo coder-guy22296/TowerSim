@@ -46,6 +46,7 @@ function startGame(game)
 {
     return duplicateGame(game).then(gameLoop);
 }
+
 function setMaxRange(game)
 {
     var maxRange = -1;
@@ -71,6 +72,7 @@ function isWinPossible(game)
 {
     return duplicateGame(game).then(setMaxRange).then(silenceGame).then(gameLoop);
 }
+
 function findMinimumRange(game, min, max)
 {
     if (game.game)
@@ -83,7 +85,7 @@ function findMinimumRange(game, min, max)
     return silenceGame(game).then(startGame).then(function(game) {
         if (game.won)
         {
-            console.log('range: '+game.tower.range+'m win');
+            console.log('testing range: '+game.tower.range+'m win');
             if (min === game.tower.range || max === game.tower.range)
                 return Promise.resolve(game.tower.range);
             else
@@ -91,7 +93,7 @@ function findMinimumRange(game, min, max)
         }
         else if (game.won === false)
         {
-            console.log('range: '+game.tower.range+'m loss');
+            console.log('testing range: '+game.tower.range+'m loss');
             return findMinimumRange(originalGame, game.tower.range, max);
         }
         else
@@ -117,23 +119,18 @@ function duplicateGame(game)
 }
 
 var badies = [];
-badies.push( new Enemy('dead', 5, 10) );
+// badies.push( new Enemy('dead', 5, 10) );
 badies.push( new Enemy('botA', 60, 10) );
 badies.push( new Enemy('botB', 60, 10) );
 badies.push( new Enemy('botC', 60, 10) );
 badies.push( new Enemy('botD', 60, 10) );
 badies.push( new Enemy('botE', 60, 10) );
 badies.push( new Enemy('botF', 60, 10) );
-badies.push( new Enemy('bob', 60, 10) );
-badies.push( new Enemy('bill', 100, 10) );
-badies.push( new Enemy('mike', 30, 20) );
+// badies.push( new Enemy('bob', 60, 10) );
+// badies.push( new Enemy('bill', 100, 10) );
+// badies.push( new Enemy('mike', 30, 20) );
 var tower = new Tower(50, badies);
 var originalGame = new TowerDefence(tower, badies);
-for (var i = 0; i < badies.length; i++)
-{
-    var enemy = badies[i];
-    enemy.calcTurnsTillRange(tower.range);
-}
 console.log('firing range: '+tower.range+'m');
 startGame(originalGame)
 .then(function(game) {
