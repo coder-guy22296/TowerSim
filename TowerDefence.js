@@ -7,6 +7,8 @@ function TowerDefence(tower, badies)
     this.extraDistance = 0;
     this.overtime = false;
     this.won = undefined;
+    this.original = true;
+    this.silent = false;
 }
 
 module.exports = TowerDefence;

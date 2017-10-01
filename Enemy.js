@@ -37,7 +37,7 @@ Enemy.prototype.announce = function()
 
 Enemy.prototype.die = function(attacker)
 {
-    console.log('die');
+    //console.log('die');
     if (this.alive && this.pos <= attacker.range)
     {   
         this.alive = false;

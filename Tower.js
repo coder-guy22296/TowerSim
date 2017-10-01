@@ -9,12 +9,12 @@ function Tower(range, targets)
 
 Tower.prototype.selectTarget = function(targets)
 {
-    console.log('st')
+    //console.log('st')
     var theChosenOne = targets[0];
     var tower = this;
     targets.forEach(function(enemy) {
         // if the enemy is a viable target
-        console.log('eval');
+        //console.log('eval');
         if (enemy.alive && enemy.pos <= tower.range)
         {
             //compare to the current target if the current target is alive
@@ -23,8 +23,8 @@ Tower.prototype.selectTarget = function(targets)
                 || theChosenOne.alive === false)
             {
                 theChosenOne = enemy;
-                console.log('selected');
-                console.log(enemy);
+                //console.log('selected');
+                //console.log(enemy);
             }
         }
     });
@@ -34,23 +34,23 @@ Tower.prototype.selectTarget = function(targets)
     }
     else
     {
-        console.log('selection complete');
+        //console.log('selection complete');
         return Promise.resolve(theChosenOne);
     }
 }
 
 Tower.prototype.killTarget = function(target)
 {
-    console.log(this);
-    console.log(target);
-    console.log('kt');
+    //console.log(this);
+    //console.log(target);
+    //console.log('kt');
     target.die(this)
     .then(function(game) {
-        console.log('wtf');
-        if (game.overtime === false)
-            console.log('turn '+currentTurn+': killed '+target.name+' at '+target.pos+'m');
+        //console.log('wtf');
+        if (game.silent === false)
+            console.log('turn '+game.turn+': killed '+target.name+' at '+target.pos+'m');
     }, function() {
-
+        console.log('lul');
     });
 }
 
@@ -62,7 +62,7 @@ function noTargetsAvailable()
 Tower.prototype.attackEnemy = function(targets)
 {
     var parent = this;
-    console.log('ae');
+    //console.log('ae');
     this.selectTarget(targets).then(this.killTarget.bind(this), noTargetsAvailable);
     return Promise.resolve(targets);
 }
