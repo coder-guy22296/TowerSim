@@ -1,0 +1,7 @@
+50m
+botA 60 10
+botB 60 10
+botC 60 10
+botD 60 10
+botE 60 10
+botF 60 10
