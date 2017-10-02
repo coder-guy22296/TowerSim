@@ -3,6 +3,8 @@ const Enemy = require('./Enemy.js')
 const Tower = require('./Tower.js')
 const TowerDefence = require('./TowerDefence.js')
 const gameFile = require('./sampleGame');
+const fs = require('fs')
+const readline = require('readline');
 
 function targetBadie(game)
 {
@@ -120,7 +122,7 @@ function duplicateGame(game)
     });
 }
 
-function loadGameFromFile(file)
+function loadGameFromJSONFile(file)
 {
     for (var i = 0; i < file.targets.length; i++)
     {
@@ -132,24 +134,41 @@ function loadGameFromFile(file)
     return Promise.resolve(originalGame);
 }
 
+function loadGameFromTextFile(filename)
+{
+    function strip(str, char) {
+        return parseInt((str.split(char))[0]);
+    }
+    var range = -1;
+    var counter = 0;
+    var contents = fs.readFileSync(filename, 'utf8');
+    var lines = contents.split('\n');
+    range = strip(lines[0], 'm');
+    for (var i = 1; i < lines.length; i++)
+    {
+        var line = lines[i];
+        var arr = lines[i].split(' ');
+        badies.push(new Enemy(arr[0], strip(arr[1], 'm'), strip(arr[2], 'm')));
+    }
+    tower = new Tower(range, badies);
+    originalGame = new TowerDefence(tower, badies);
+    return Promise.resolve(originalGame);
+}
+
 var badies = [];
 var tower = undefined;
 var originalGame = undefined;
+var filename = undefined;
 
-// badies.push( new Enemy('dead', 5, 10) );
-// badies.push( new Enemy('botA', 60, 10) );
-// badies.push( new Enemy('botB', 60, 10) );
-// badies.push( new Enemy('botC', 60, 10) );
-// badies.push( new Enemy('botD', 60, 10) );
-// badies.push( new Enemy('botE', 60, 10) );
-// badies.push( new Enemy('botF', 60, 10) );
-// badies.push( new Enemy('bob', 60, 10) );
-// badies.push( new Enemy('bill', 100, 10) );
-// badies.push( new Enemy('mike', 30, 20) );
-// tower = new Tower(50, badies);
-// originalGame = new TowerDefence(tower, badies);
-
-loadGameFromFile(gameFile)
+if (process.argv[2] === undefined)
+{
+    console.log('defaulting to sample game file: game.txt')
+    filename = 'game.txt'
+}
+else
+    filename = process.argv[2];
+//loadGameFromJSONFile(filename) //use this one for json filesno
+loadGameFromTextFile(filename)
 .then(startGame)
 .then(function(game) {
     if (game.won === true)
