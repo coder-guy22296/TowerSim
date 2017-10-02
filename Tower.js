@@ -30,18 +30,17 @@ Tower.prototype.selectTarget = function(targets)
 
 Tower.prototype.killTarget = function(target)
 {
-    target.die(this)
+    return target.die(this)
     .then(function(game) {
         if (game.silent === false)
             console.log('turn '+game.turn+': killed '+target.name+' at '+target.pos+'m');
+        return Promise.resolve(target);
     });
 }
 
 Tower.prototype.attackEnemy = function(targets)
 {
-    var parent = this;
-    this.selectTarget(targets).then(this.killTarget.bind(this));
-    return Promise.resolve(targets);
+    return this.selectTarget(targets).then(this.killTarget.bind(this));
 }
 
 module.exports = Tower;

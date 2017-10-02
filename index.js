@@ -1,7 +1,7 @@
-var lodash = require('lodash')
-var Enemy = require('./Enemy.js')
-var Tower = require('./Tower.js')
-var TowerDefence = require('./TowerDefence.js')
+const lodash = require('lodash')
+const Enemy = require('./Enemy.js')
+const Tower = require('./Tower.js')
+const TowerDefence = require('./TowerDefence.js')
 
 function targetBadie(game)
 {
@@ -24,6 +24,11 @@ function moveBadies(game)
     return Promise.resolve(game);
 }
 
+function startGame(game)
+{
+    return duplicateGame(game).then(gameLoop);
+}
+
 function gameLoop(game)
 {
     return targetBadie(game)
@@ -42,11 +47,6 @@ function gameLoop(game)
     });
 }
 
-function startGame(game)
-{
-    return duplicateGame(game).then(gameLoop);
-}
-
 function setMaxRange(game)
 {
     var maxRange = -1;
@@ -59,7 +59,7 @@ function setMaxRange(game)
     if (game.tower.range > 0)
         return Promise.resolve(game);
     else
-        console.log('get rekt');
+        console.error('Tower range is negative!?');
 }
 
 function silenceGame(game)
@@ -119,16 +119,16 @@ function duplicateGame(game)
 }
 
 var badies = [];
-// badies.push( new Enemy('dead', 5, 10) );
+badies.push( new Enemy('dead', 5, 10) );
 badies.push( new Enemy('botA', 60, 10) );
 badies.push( new Enemy('botB', 60, 10) );
 badies.push( new Enemy('botC', 60, 10) );
 badies.push( new Enemy('botD', 60, 10) );
-badies.push( new Enemy('botE', 60, 10) );
-badies.push( new Enemy('botF', 60, 10) );
-// badies.push( new Enemy('bob', 60, 10) );
-// badies.push( new Enemy('bill', 100, 10) );
-// badies.push( new Enemy('mike', 30, 20) );
+// badies.push( new Enemy('botE', 60, 10) );
+// badies.push( new Enemy('botF', 60, 10) );
+badies.push( new Enemy('bob', 60, 10) );
+badies.push( new Enemy('bill', 100, 10) );
+badies.push( new Enemy('mike', 30, 20) );
 var tower = new Tower(50, badies);
 var originalGame = new TowerDefence(tower, badies);
 console.log('firing range: '+tower.range+'m');

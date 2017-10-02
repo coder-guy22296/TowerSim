@@ -1,18 +1,20 @@
 {
   "name": "towergunner",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Tower Defence Simulator",
   "engines": {
     "node": "0.12.14"
   },
   "engineStrict": true,
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
-  "author": "",
+  "author": "Can Yildirim",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "mocha": "^3.5.3",
+    "should": "^13.1.0"
   }
 }

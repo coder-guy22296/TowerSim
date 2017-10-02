@@ -24,8 +24,6 @@ Enemy.prototype.die = function(attacker)
         attacker.targetCnt -= 1;
         return Promise.resolve(attacker.game);
     }
-    else
-        console.error('tried to kill a target that was out of range or dead!');
 };
 
 module.exports = Enemy;
