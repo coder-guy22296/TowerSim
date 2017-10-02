@@ -2,6 +2,7 @@ const lodash = require('lodash')
 const Enemy = require('./Enemy.js')
 const Tower = require('./Tower.js')
 const TowerDefence = require('./TowerDefence.js')
+const gameFile = require('./sampleGame');
 
 function targetBadie(game)
 {
@@ -26,6 +27,7 @@ function moveBadies(game)
 
 function startGame(game)
 {
+    console.log('firing range: '+game.tower.range+'m');
     return duplicateGame(game).then(gameLoop);
 }
 
@@ -118,21 +120,37 @@ function duplicateGame(game)
     });
 }
 
+function loadGameFromFile(file)
+{
+    for (var i = 0; i < file.targets.length; i++)
+    {
+        var target = file.targets[i];
+        badies.push(new Enemy(target.name, target.pos, target.speed));
+    }
+    tower = new Tower(file.range, badies);
+    originalGame = new TowerDefence(tower, badies);
+    return Promise.resolve(originalGame);
+}
+
 var badies = [];
-badies.push( new Enemy('dead', 5, 10) );
-badies.push( new Enemy('botA', 60, 10) );
-badies.push( new Enemy('botB', 60, 10) );
-badies.push( new Enemy('botC', 60, 10) );
-badies.push( new Enemy('botD', 60, 10) );
+var tower = undefined;
+var originalGame = undefined;
+
+// badies.push( new Enemy('dead', 5, 10) );
+// badies.push( new Enemy('botA', 60, 10) );
+// badies.push( new Enemy('botB', 60, 10) );
+// badies.push( new Enemy('botC', 60, 10) );
+// badies.push( new Enemy('botD', 60, 10) );
 // badies.push( new Enemy('botE', 60, 10) );
 // badies.push( new Enemy('botF', 60, 10) );
-badies.push( new Enemy('bob', 60, 10) );
-badies.push( new Enemy('bill', 100, 10) );
-badies.push( new Enemy('mike', 30, 20) );
-var tower = new Tower(50, badies);
-var originalGame = new TowerDefence(tower, badies);
-console.log('firing range: '+tower.range+'m');
-startGame(originalGame)
+// badies.push( new Enemy('bob', 60, 10) );
+// badies.push( new Enemy('bill', 100, 10) );
+// badies.push( new Enemy('mike', 30, 20) );
+// tower = new Tower(50, badies);
+// originalGame = new TowerDefence(tower, badies);
+
+loadGameFromFile(gameFile)
+.then(startGame)
 .then(function(game) {
     if (game.won === true)
     {

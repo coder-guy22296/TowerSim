@@ -1,0 +1,8 @@
+{
+    "range": 50,
+    "targets": [
+        {"name": "BotA", "pos": 100, "speed": 10 },
+        {"name": "BotB", "pos": 50, "speed": 20 },
+        {"name": "BotC", "pos": 30, "speed": 20 }
+    ]
+}
